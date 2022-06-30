@@ -6,6 +6,9 @@
 #include <iostream>
 #include <vector>
 
+#include <eigen3/Eigen/Dense>
+
+
 class ETL
 {
     std::string filename;
@@ -16,6 +19,7 @@ public:
 
     ETL(std::string name, std::string seperator, bool header);
     std::vector< std::vector<std::string>> ReadCSV();
+    Eigen::MatrixXd CSVtoEigen(std::vector<std::vector<std::string>> dataset, int rows, int cols);
 
 };
 

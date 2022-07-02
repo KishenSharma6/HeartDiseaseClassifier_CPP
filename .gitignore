@@ -6,3 +6,6 @@ build/*
 
 #Ignore todo list
 ToDo.md
+
+#Ignore DS Store
+.DS_Store

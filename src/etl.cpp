@@ -4,16 +4,17 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <tuple>
+
 #include <boost/algorithm/string.hpp>
 #include <eigen3/Eigen/Dense>
 
 
 
-ETL::ETL(std::string name, std::string seperator, bool header)
+ETL::ETL(std::string name, std::string seperator)
 {
     filename= name;
     delimiter= seperator;
-    containsHeader= header;
     
 }
 
@@ -43,10 +44,6 @@ Eigen::MatrixXd ETL::CSVtoEigen(std::vector<std::vector<std::string>> dataset, i
 {
     Eigen::MatrixXd datamat(rows, cols);
 
-    if (containsHeader == true)
-    {
-        rows =rows -1;
-    }
     for (int i=0;i<rows ;i++)
     {
         for (int j =0; j <cols; j ++)
@@ -55,4 +52,27 @@ Eigen::MatrixXd ETL::CSVtoEigen(std::vector<std::vector<std::string>> dataset, i
         }
     }
     return datamat;
+}
+
+std::tuple< Eigen::MatrixXd,Eigen::MatrixXd, Eigen::MatrixXd, Eigen::MatrixXd > ETL::TrainTestSplit(Eigen::MatrixXd data, float split)
+{
+    int rows= data.rows();
+    int cols= data.cols();
+    int train_rows= round(rows * split);
+    int test_rows= rows - train_rows;
+
+    // Subset our training data
+    Eigen::MatrixXd train(data.topRows(train_rows));
+
+    Eigen::MatrixXd X_train = train.leftCols(cols - 1);
+    Eigen::MatrixXd y_train = train.rightCols(1);
+    
+    //Subset our test data
+    Eigen::MatrixXd test(data.bottomRows(test_rows));
+
+    Eigen::MatrixXd X_test = test.leftCols(cols - 1);
+    Eigen::MatrixXd y_test = test.rightCols(1);
+
+    return std::make_tuple(X_train, y_train, X_test, y_test);
+
 }

@@ -13,13 +13,15 @@ class ETL
 {
     std::string filename;
     std::string delimiter;
-    bool containsHeader;
+    
 
 public:
 
-    ETL(std::string name, std::string seperator, bool header);
+    ETL(std::string name, std::string seperator);
     std::vector< std::vector<std::string>> ReadCSV();
     Eigen::MatrixXd CSVtoEigen(std::vector<std::vector<std::string>> dataset, int rows, int cols);
+    std::tuple< Eigen::MatrixXd,Eigen::MatrixXd, Eigen::MatrixXd, Eigen::MatrixXd > TrainTestSplit(Eigen::MatrixXd data, float split);
+
 
 };
 

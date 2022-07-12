@@ -5,6 +5,9 @@
 #include <vector>
 #include <fstream>
 #include <tuple>
+#include <algorithm>
+#include <random>
+
 
 #include <boost/algorithm/string.hpp>
 #include <eigen3/Eigen/Dense>
@@ -76,3 +79,4 @@ std::tuple< Eigen::MatrixXd,Eigen::MatrixXd, Eigen::MatrixXd, Eigen::MatrixXd > 
     return std::make_tuple(X_train, y_train, X_test, y_test);
 
 }
+

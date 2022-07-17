@@ -1,3 +1,6 @@
+#Ignore Data
+data/*
+
 #Ignore build folder
 build/*
 
